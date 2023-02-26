@@ -1,0 +1,13 @@
+.paginator{
+    margin: 10px;
+    display: inline-block;
+}
+
+.paginator span{
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.selectedPage {
+    font-weight: 700;
+}

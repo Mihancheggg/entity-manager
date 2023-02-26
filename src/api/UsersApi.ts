@@ -14,9 +14,18 @@ export const UsersApi = {
 
 export type UserType = {
     id: string,
+    name?: string,
+    email?: string,
+    access?: boolean,
+    lastName?: string,
+    birthDate?: string
+}
+
+export type FixedUserType = {
+    id: string,
     name: string,
     email: string,
     access: boolean,
     lastName: string,
-    birthDate: Date
+    birthDate: string
 }
