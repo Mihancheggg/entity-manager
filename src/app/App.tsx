@@ -4,7 +4,7 @@ import { UsersList } from '../modules/UsersList/UsersList';
 import { AddItemForm } from '../components/AddItemForm/AddItemForm';
 import { Paginator } from '../components/Paginator/Paginator';
 import { useAppDispatch, useAppSelector } from './store';
-import { getUsersTC, setCurrentPageAC } from '../modules/UsersList/usersReducer';
+import { deleteUserTC, getUsersTC, setCurrentPageAC } from '../modules/UsersList/usersReducer';
 
 export type FilterType = 'id' | 'name' | 'email' | 'access' | 'lastName' | 'birthDate'
 
@@ -28,10 +28,10 @@ function App() {
     let sortedUsers = [...users];
     if (filterValue !== null) {
         sortedUsers.sort((a, b) => {
-            if(!a[filterValue]){
+            if (!a[filterValue]) {
                 return 1
             }
-            if(!b[filterValue]){
+            if (!b[filterValue]) {
                 return -1
             }
             if (a[filterValue] < b[filterValue]) {
@@ -50,6 +50,10 @@ function App() {
         dispatch(setCurrentPageAC(pageNumber))
     }
 
+    const deleteUser = (userId: string) => {
+        dispatch(deleteUserTC(userId))
+    }
+
     return (
         <div className="App">
             <AddItemForm/>
@@ -60,7 +64,11 @@ function App() {
                 portionSize={10}
                 onPageChanged={onPageChanged}
             />
-            <UsersList users={usersToShow} callback={setFilterValue}/>
+            <UsersList
+                users={usersToShow}
+                updateFilter={setFilterValue}
+                deleteUser={deleteUser}
+            />
         </div>
     );
 }

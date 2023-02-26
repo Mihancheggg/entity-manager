@@ -1,29 +1,35 @@
 import React from 'react';
-import { UserType } from '../../../api/UsersApi';
+import { FixedUserType, UserType } from '../../../api/UsersApi';
 import { EditableSpan } from '../../../components/EditableSpan/EditableSpan';
 
-export const UserItem = (props: UserType) => {
+type UserItemPropsType = {
+    user: FixedUserType
+    deleteUser: (userId: string) => void
+}
+
+export const UserItem = (props: UserItemPropsType) => {
+    const {user, deleteUser} = props
     return (
         <tr>
             <td>
-                <EditableSpan value={props.id} onChange={() => {
-                }}/>
+                <span>{user.id}</span>
             </td>
             <td>
-                {props.name && <EditableSpan value={props.name} onChange={()=> {}}/>}
+                <EditableSpan value={user.name} onChange={()=> {}}/>
             </td>
             <td>
-                {props.lastName && <EditableSpan value={props.lastName} onChange={()=> {}}/>}
+                <EditableSpan value={user.lastName} onChange={()=> {}}/>
             </td>
             <td>
-                {props.email && <EditableSpan value={props.email} onChange={()=> {}}/>}
+               <EditableSpan value={user.email} onChange={()=> {}}/>
             </td>
             <td>
-                {props.birthDate && <EditableSpan value={props.birthDate} onChange={()=> {}}/>}
+                <EditableSpan value={user.birthDate} onChange={()=> {}}/>
             </td>
             <td>
-                {props.access && props.access.toString()}
+                {user.access.toString()}
             </td>
+            <button onClick={() => deleteUser(user.id)}>Delete</button>
         </tr>
 
     );

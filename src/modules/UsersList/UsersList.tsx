@@ -1,12 +1,13 @@
 import React from 'react';
-import { UserType } from '../../api/UsersApi';
+import { FixedUserType, UserType } from '../../api/UsersApi';
 import styles from './UsersList.module.css'
 import { UserItem } from './UserItem/UserItem';
 import { FilterType } from '../../app/App';
 
 type UsersListPropsType = {
-    users: UserType[],
-    callback: (filter: FilterType) => void
+    users: FixedUserType[],
+    updateFilter: (filter: FilterType) => void,
+    deleteUser: (userId: string) => void
 }
 
 export const UsersList = (props: UsersListPropsType) => {
@@ -24,7 +25,7 @@ export const UsersList = (props: UsersListPropsType) => {
             <thead>
             <tr>
                 {fields.map((el, index) => <td key={index}>
-                        <th onClick={() => props.callback(el.type as FilterType)}>
+                        <th onClick={() => props.updateFilter(el.type as FilterType)}>
                             {el.name}
                         </th>
                     </td>
@@ -34,12 +35,8 @@ export const UsersList = (props: UsersListPropsType) => {
             <tbody>
             {props.users.map(el => <UserItem
                 key={el.id}
-                id={el.id}
-                name={el.name}
-                lastName={el.lastName}
-                email={el.email}
-                access={el.access}
-                birthDate={el.birthDate}
+                user={el}
+                deleteUser={props.deleteUser}
             />)}
             </tbody>
         </table>

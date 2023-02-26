@@ -9,6 +9,10 @@ export const UsersApi = {
     getUsers() {
         return instance.get<null, AxiosResponse<UserType[]>>('')
             .then(response => response.data)
+    },
+    deleteUser(userId: string){
+        return instance.delete<string, AxiosResponse<any>>(`${userId}`)
+            .then(response=> response)
     }
 }
 
