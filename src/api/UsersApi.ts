@@ -1,8 +1,12 @@
-import axios, {AxiosResponse} from 'axios'
+import axios, { AxiosResponse } from 'axios'
+import { log } from 'util';
 
 const instance = axios.create({
     baseURL: 'https://retoolapi.dev/eqsQ4S/users/',
     withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json'
+    }
 })
 
 export const UsersApi = {
@@ -10,9 +14,14 @@ export const UsersApi = {
         return instance.get<null, AxiosResponse<UserType[]>>('')
             .then(response => response.data)
     },
-    deleteUser(userId: string){
-        return instance.delete<string, AxiosResponse<any>>(`${userId}`)
-            .then(response=> response)
+    deleteUser(userId: string) {
+        return instance.delete<string, AxiosResponse<{}>>(`${userId}`)
+    },
+    addUser(user: FixedUserType) {
+        return instance.post<FixedUserType, AxiosResponse<any>>(``, user)
+    },
+    updateUser(user: FixedUserType){
+        return instance.put<FixedUserType,AxiosResponse<any>>(`${user.id}`, user)
     }
 }
 

@@ -15,6 +15,13 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
             return {...state, users: action.payload.users, totalUsersCount: action.payload.users.length}
         case 'DELETE_USER':
             return {...state, users: state.users.filter(el => el.id !== action.payload.userId)}
+        case 'ADD_USER':
+            return {...state, users: [...state.users, action.payload.user]}
+        case 'UPDATE_USER':
+            return {
+                ...state,
+                users: state.users.map(el => el.id === action.payload.user.id ? {...action.payload.user} : el)
+            }
         case 'SET_CURRENT_PAGE':
             return {...state, currentPage: action.payload.pageNumber}
         default:
@@ -36,6 +43,24 @@ export const deleteUserAC = (userId: string) => {
         type: 'DELETE_USER',
         payload: {
             userId
+        }
+    } as const
+}
+
+export const addUserAC = (user: FixedUserType) => {
+    return {
+        type: 'ADD_USER',
+        payload: {
+            user
+        }
+    } as const
+}
+
+export const updateUserAC = (user: FixedUserType) => {
+    return {
+        type: 'UPDATE_USER',
+        payload: {
+            user
         }
     } as const
 }
@@ -75,9 +100,23 @@ export const deleteUserTC = (userId: string): ThunkType => {
             if (response.status === 200) {
                 dispatch(deleteUserAC(userId))
             }
-        }
-        catch (e) {
+        } catch (e) {
 
+        }
+    }
+}
+
+export const addUserTC = (user: FixedUserType): ThunkType => {
+    return async (dispatch: ThunkDispatchType) => {
+        const response = await UsersApi.addUser(user)
+    }
+}
+
+export const updateUserTC = (user: FixedUserType): ThunkType => {
+    return async (dispatch: ThunkDispatchType) => {
+        const response = await UsersApi.updateUser(user)
+        if (response.status === 200) {
+            dispatch(updateUserAC(user))
         }
     }
 }
@@ -90,8 +129,15 @@ type UsersStateType = {
     isFetching: boolean
 }
 
-export type UsersReducerActionTypes = SetUsersACType | DeleteUserACType | SetCurrentPageACType
+export type UsersReducerActionTypes =
+    SetUsersACType
+    | DeleteUserACType
+    | AddUserACType
+    | UpdateUserACType
+    | SetCurrentPageACType
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export type DeleteUserACType = ReturnType<typeof deleteUserAC>
+export type AddUserACType = ReturnType<typeof addUserAC>
+export type UpdateUserACType = ReturnType<typeof updateUserAC>
 export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>

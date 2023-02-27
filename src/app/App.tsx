@@ -4,7 +4,8 @@ import { UsersList } from '../modules/UsersList/UsersList';
 import { AddItemForm } from '../components/AddItemForm/AddItemForm';
 import { Paginator } from '../components/Paginator/Paginator';
 import { useAppDispatch, useAppSelector } from './store';
-import { deleteUserTC, getUsersTC, setCurrentPageAC } from '../modules/UsersList/usersReducer';
+import { addUserTC, deleteUserTC, getUsersTC, setCurrentPageAC } from '../modules/UsersList/usersReducer';
+import { FixedUserType } from '../api/UsersApi';
 
 export type FilterType = 'id' | 'name' | 'email' | 'access' | 'lastName' | 'birthDate'
 
@@ -54,9 +55,13 @@ function App() {
         dispatch(deleteUserTC(userId))
     }
 
+    const addItem = (user: FixedUserType) => {
+        dispatch(addUserTC(user))
+    }
+
     return (
         <div className="App">
-            <AddItemForm/>
+            <AddItemForm addItem={addItem}/>
             <Paginator
                 totalUsersCount={totalUsersCount}
                 pageSize={pageSize}
