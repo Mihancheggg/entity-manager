@@ -4,6 +4,8 @@ This small app takes entities from server an allows you update and delete them a
 
 ![Info](https://user-images.githubusercontent.com/102235764/221875746-65a0c008-eb65-455e-810d-f9a015ebd5a2.png)
 
+Try it on GH-pages! https://mihancheggg.github.io/entity-manager/
+
 
 ## Technologies used
 
