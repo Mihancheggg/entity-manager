@@ -18,7 +18,7 @@ export const UsersApi = {
         return instance.delete<string, AxiosResponse<{}>>(`${userId}`)
     },
     addUser(user: FixedUserType) {
-        return instance.post<FixedUserType, AxiosResponse<any>>(``, user)
+        return instance.post<FixedUserType, AxiosResponse<any>>(``, {user})
     },
     updateUser(user: FixedUserType){
         return instance.put<FixedUserType,AxiosResponse<any>>(`${user.id}`, user)
