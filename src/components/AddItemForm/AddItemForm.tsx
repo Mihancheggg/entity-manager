@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { FixedUserType } from '../../api/UsersApi';
 import { v1 } from 'uuid';
+import styles from './AddItemForm.module.css'
 
 type AddItemFormPropsType = {
     addItem: (user: FixedUserType) => void
@@ -27,7 +28,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
 
     return (
-        <form>
+        <form className={styles.form}>
             <input type="text" placeholder="Name" name="name" value={user.name} onChange={onChangeHandler}/>
             <input type="text" placeholder="Last name" name="lastName" value={user.lastName} onChange={onChangeHandler}/>
             <input type="text" placeholder="E-mail" name="email" value={user.email} onChange={onChangeHandler}/>

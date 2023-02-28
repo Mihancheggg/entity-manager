@@ -108,8 +108,13 @@ export const deleteUserTC = (userId: string): ThunkType => {
 
 export const addUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
-        const response = await UsersApi.addUser(user)
-        dispatch(addUserAC(user))
+        try {
+            const response = await UsersApi.addUser(user)
+            console.log(response)
+            dispatch(addUserAC(user))
+        } catch (e) {
+
+        }
     }
 }
 

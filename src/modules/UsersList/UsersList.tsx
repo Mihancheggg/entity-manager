@@ -22,7 +22,7 @@ export const UsersList = (props: UsersListPropsType) => {
 
     return (
         <table className={styles.list}>
-            <thead>
+            <thead className={styles.head}>
             <tr>
                 {fields.map((el, index) => <td key={index}>
                         <th onClick={() => props.updateFilter(el.type as FilterType)}>
