@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/entity-manager/static/css/main.592ce137.css",
+    "main.js": "/entity-manager/static/js/main.5155a605.js",
+    "static/js/787.e1b21e21.chunk.js": "/entity-manager/static/js/787.e1b21e21.chunk.js",
+    "index.html": "/entity-manager/index.html",
+    "main.592ce137.css.map": "/entity-manager/static/css/main.592ce137.css.map",
+    "main.5155a605.js.map": "/entity-manager/static/js/main.5155a605.js.map",
+    "787.e1b21e21.chunk.js.map": "/entity-manager/static/js/787.e1b21e21.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.592ce137.css",
+    "static/js/main.5155a605.js"
+  ]
+}
