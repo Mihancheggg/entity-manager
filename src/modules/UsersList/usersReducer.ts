@@ -48,6 +48,7 @@ export const deleteUserAC = (userId: string) => {
 }
 
 export const addUserAC = (user: FixedUserType) => {
+    debugger
     return {
         type: 'ADD_USER',
         payload: {
@@ -76,20 +77,27 @@ export const setCurrentPageAC = (pageNumber: number) => {
 
 export const getUsersTC = (): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
-        const data = await UsersApi.getUsers()
-        const model = {
-            id: '',
-            name: '',
-            email: '',
-            access: false,
-            lastName: '',
-            birthDate: ''
+        try {
+            const data = await UsersApi.getUsers()
+            const model = {
+                id: '',
+                name: '',
+                email: '',
+                access: false,
+                lastName: '',
+                birthDate: ''
+            }
+            const fixedData = []
+            for (let i = 0; i < data.length; i++) {
+                fixedData.push({...model, ...data[i]})
+            }
+            dispatch(setUsersAC(fixedData))
+        } catch (e) {
+            alert("Users getting error: " + e)
+        } finally {
+
         }
-        const fixedData = []
-        for (let i = 0; i < data.length; i++) {
-            fixedData.push({...model, ...data[i]})
-        }
-        dispatch(setUsersAC(fixedData))
+
     }
 }
 
@@ -101,6 +109,8 @@ export const deleteUserTC = (userId: string): ThunkType => {
                 dispatch(deleteUserAC(userId))
             }
         } catch (e) {
+            alert("User deleting error: " + e)
+        } finally {
 
         }
     }
@@ -109,20 +119,26 @@ export const deleteUserTC = (userId: string): ThunkType => {
 export const addUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
+            debugger
             const response = await UsersApi.addUser(user)
-            console.log(response)
             dispatch(addUserAC(user))
         } catch (e) {
-
+            alert("User adding error: " + e)
         }
     }
 }
 
 export const updateUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
-        const response = await UsersApi.updateUser(user)
-        if (response.status === 200) {
-            dispatch(updateUserAC(user))
+        try {
+            const response = await UsersApi.updateUser(user)
+            if (response.status === 200) {
+                dispatch(updateUserAC(user))
+            }
+        } catch (e) {
+            alert("User updating error: " + e)
+        } finally {
+
         }
     }
 }
