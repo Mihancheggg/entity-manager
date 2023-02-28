@@ -18,7 +18,6 @@ export const UsersApi = {
         return instance.delete<string, AxiosResponse<{}>>(`${userId}`)
     },
     addUser(user: FixedUserType) {
-        debugger
         return instance.post<FixedUserType, AxiosResponse<any>>(``, {...user})
         /*return fetch('https://retoolapi.dev/eqsQ4S/users/', {
             method: 'POST',

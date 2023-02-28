@@ -48,7 +48,6 @@ export const deleteUserAC = (userId: string) => {
 }
 
 export const addUserAC = (user: FixedUserType) => {
-    debugger
     return {
         type: 'ADD_USER',
         payload: {
@@ -119,7 +118,6 @@ export const deleteUserTC = (userId: string): ThunkType => {
 export const addUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
-            debugger
             const response = await UsersApi.addUser(user)
             dispatch(addUserAC(user))
         } catch (e) {
