@@ -35,23 +35,23 @@ export const UserItem = (props: UserItemPropsType) => {
             <td>
                 <span>{currentUser.id}</span>
             </td>
-            <td>
+            <td onDoubleClick={() => {setEditMode(true)}}>
                 <EditableSpan value={currentUser.name} onChange={(value: string) => onChangeHandler('name', value)}
-                              editMode={editMode} setEditMode={setEditMode}/>
+                              editMode={editMode} />
             </td>
-            <td>
+            <td onDoubleClick={() => {setEditMode(true)}}>
                 <EditableSpan value={currentUser.lastName}
                               onChange={(value: string) => onChangeHandler('lastName', value)} editMode={editMode}
-                              setEditMode={setEditMode}/>
+                              />
             </td>
             <td>
                 <EditableSpan value={currentUser.email} onChange={(value: string) => onChangeHandler('email', value)}
-                              editMode={editMode} setEditMode={setEditMode}/>
+                              editMode={editMode} />
             </td>
-            <td>
+            <td onDoubleClick={() => {setEditMode(true)}}>
                 <EditableSpan value={currentUser.birthDate}
                               onChange={(value: string) => onChangeHandler('birthDate', value)} editMode={editMode}
-                              setEditMode={setEditMode}/>
+                              />
             </td>
             {editMode ?
                 <td onClick={onCheckHandler} className={styles.edited} style={{background:'white'}}>
