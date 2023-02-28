@@ -61,6 +61,7 @@ function App() {
 
     return (
         <div className="App">
+            {isFetching && <h3>Loading...</h3>}
             <AddItemForm addItem={addItem}/>
             <Paginator
                 totalUsersCount={totalUsersCount}

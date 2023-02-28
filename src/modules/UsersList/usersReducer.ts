@@ -24,6 +24,8 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
             }
         case 'SET_CURRENT_PAGE':
             return {...state, currentPage: action.payload.pageNumber}
+        case 'SET_FETCHING':
+            return {...state, isFetching: action.payload.isFetching}
         default:
             return state
     }
@@ -74,9 +76,19 @@ export const setCurrentPageAC = (pageNumber: number) => {
     } as const
 }
 
+export const setFetchingAC = (isFetching: boolean) => {
+    return {
+        type: 'SET_FETCHING',
+        payload: {
+            isFetching
+        }
+    } as const
+}
+
 export const getUsersTC = (): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
+            dispatch(setFetchingAC(true))
             const data = await UsersApi.getUsers()
             const model = {
                 id: '',
@@ -92,9 +104,9 @@ export const getUsersTC = (): ThunkType => {
             }
             dispatch(setUsersAC(fixedData))
         } catch (e) {
-            alert("Users getting error: " + e)
+            alert('Users getting error: ' + e)
         } finally {
-
+            dispatch(setFetchingAC(false))
         }
 
     }
@@ -103,14 +115,15 @@ export const getUsersTC = (): ThunkType => {
 export const deleteUserTC = (userId: string): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
+            dispatch(setFetchingAC(true))
             const response = await UsersApi.deleteUser(userId)
             if (response.status === 200) {
                 dispatch(deleteUserAC(userId))
             }
         } catch (e) {
-            alert("User deleting error: " + e)
+            alert('User deleting error: ' + e)
         } finally {
-
+            dispatch(setFetchingAC(false))
         }
     }
 }
@@ -118,10 +131,13 @@ export const deleteUserTC = (userId: string): ThunkType => {
 export const addUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
+            dispatch(setFetchingAC(true))
             const response = await UsersApi.addUser(user)
             dispatch(addUserAC(user))
         } catch (e) {
-            alert("User adding error: " + e)
+            alert('User adding error: ' + e)
+        } finally {
+            dispatch(setFetchingAC(false))
         }
     }
 }
@@ -129,19 +145,20 @@ export const addUserTC = (user: FixedUserType): ThunkType => {
 export const updateUserTC = (user: FixedUserType): ThunkType => {
     return async (dispatch: ThunkDispatchType) => {
         try {
+            dispatch(setFetchingAC(true))
             const response = await UsersApi.updateUser(user)
             if (response.status === 200) {
                 dispatch(updateUserAC(user))
             }
         } catch (e) {
-            alert("User updating error: " + e)
+            alert('User updating error: ' + e)
         } finally {
-
+            dispatch(setFetchingAC(false))
         }
     }
 }
 
-type UsersStateType = {
+export type UsersStateType = {
     users: Array<FixedUserType>,
     pageSize: number,
     totalUsersCount: number,
@@ -155,9 +172,11 @@ export type UsersReducerActionTypes =
     | AddUserACType
     | UpdateUserACType
     | SetCurrentPageACType
+    | setFetchingACType
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export type DeleteUserACType = ReturnType<typeof deleteUserAC>
 export type AddUserACType = ReturnType<typeof addUserAC>
 export type UpdateUserACType = ReturnType<typeof updateUserAC>
 export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export type setFetchingACType = ReturnType<typeof setFetchingAC>

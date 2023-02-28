@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import { log } from 'util';
 
 const instance = axios.create({
     baseURL: 'https://retoolapi.dev/eqsQ4S/users/',
@@ -19,13 +18,6 @@ export const UsersApi = {
     },
     addUser(user: FixedUserType) {
         return instance.post<FixedUserType, AxiosResponse<any>>(``, {...user})
-        /*return fetch('https://retoolapi.dev/eqsQ4S/users/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })*/
     },
     updateUser(user: FixedUserType){
         return instance.put<FixedUserType,AxiosResponse<any>>(`${user.id}`, user)
